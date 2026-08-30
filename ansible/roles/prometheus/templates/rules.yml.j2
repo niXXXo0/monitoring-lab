@@ -3,7 +3,7 @@ groups:
     interval: 15s
     rules:
       - alert: ServerDown
-        expr: up{job="debian-servers"} == 0
+        expr: up{job="debian_servers"} == 0
         for: 1m
         labels:
           severity: critical

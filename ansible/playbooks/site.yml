@@ -12,3 +12,11 @@
 
   roles:
     - prometheus 
+
+
+- name: Configure Alertmanager
+  hosts: prometheus_servers
+  become: true
+
+  roles:
+    - alertmanager 
