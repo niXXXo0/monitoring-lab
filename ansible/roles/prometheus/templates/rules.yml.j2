@@ -1,0 +1,36 @@
+groups:
+  - name: server_alerts
+    interval: 15s
+    rules:
+      - alert: ServerDown
+        expr: up{job="debian-servers"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          {% raw %}
+          summary: "Server {{ $labels.instance }} is down"
+          description: "Node Exporter on {{ $labels.instance }} has not been responding for more than 1 minute."
+          {% endraw %}
+
+      - alert: HighCPU
+        expr: (100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance) * 100)) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          {% raw %}
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage on {{ $labels.instance }} has exceeded 80% for 5 minutes."
+          {% endraw %}
+
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          {% raw %}
+          summary: "Low disk space on {{ $labels.instance }}"
+          description: "Less than 10% free space left on {{ $labels.mountpoint }}."
+          {% endraw %}

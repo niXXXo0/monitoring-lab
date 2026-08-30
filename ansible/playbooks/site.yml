@@ -4,3 +4,11 @@
 
   roles:
     - node_exporter
+
+
+- name: Configure Prometheus
+  hosts: prometheus_servers
+  become: true
+
+  roles:
+    - prometheus 
