@@ -20,3 +20,10 @@
 
   roles:
     - alertmanager 
+
+
+- name: Configure Monitoring
+  hosts: grafana_servers
+  become: true
+  roles:
+    - grafana
