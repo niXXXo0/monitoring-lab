@@ -1,0 +1,29 @@
+name: Ansible CI
+
+
+on:
+  push:
+    branches:
+      - main
+      - ci
+  pull_request:
+
+jobs:
+  ansible-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install ansible
+        run: pip install ansible-core
+
+
+      - name: Ansible syntax check
+        run: ansible-playbook -i ansible/inventory/hosts ansible/playbooks/site.yml --syntax-check
