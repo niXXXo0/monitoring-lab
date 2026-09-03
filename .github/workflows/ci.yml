@@ -35,4 +35,6 @@ jobs:
 
 
       - name: Run ansible-lint
+        env:
+          ANSIBLE_CONFIG: ansible/ansible.cfg
         run: ansible-lint ansible
