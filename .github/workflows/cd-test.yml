@@ -17,6 +17,14 @@ jobs:
         uses: actions/checkout@v4
 
 
+      - name: Create vault password file
+        env:
+          VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
+        run: |
+          printf '%s/n' "$VAULT_PASSWORD" > "$RUNNER_TEMP/vault_password"
+          chmod 600 "$RUNNER_TEMP/vault_password"
+
+
       - name: Run ansible check
         working-directory: ansible
-        run: ansible-playbook -i inventory/hosts.yml playbooks/site.yml --check
+        run: ansible-playbook -i inventory/hosts.yml playbooks/site.yml --check --vault-password-file "$RUNNER_TEMP/vault_password"
