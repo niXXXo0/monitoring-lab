@@ -26,4 +26,5 @@ jobs:
 
 
       - name: Ansible syntax check
-        run: ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/site.yml --syntax-check
+        working-directory: ansible
+        run: ansible-playbook -i inventory/hosts.yml playbooks/site.yml --syntax-check
