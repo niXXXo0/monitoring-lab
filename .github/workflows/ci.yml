@@ -35,4 +35,4 @@ jobs:
 
 
       - name: Run ansible-lint
-        run: ansible-lint .
+        run: ansible-lint ansible
