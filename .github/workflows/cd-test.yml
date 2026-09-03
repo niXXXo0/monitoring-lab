@@ -1,0 +1,22 @@
+name: CD test
+
+
+on:
+  push:
+    branches:
+      - ci
+
+
+jobs:
+  ansible-check:
+    runs-on: self-hosted
+
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Run ansible check
+        working-directory: ansible
+        run: ansible-playbook -i inventory/hosts.yml playbooks/site.yml --check
