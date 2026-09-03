@@ -21,7 +21,7 @@ jobs:
         env:
           VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
         run: |
-          printf '%s/n' "$VAULT_PASSWORD" > "$RUNNER_TEMP/vault_password"
+          printf '%s\n' "$VAULT_PASSWORD" > "$RUNNER_TEMP/vault_password"
           chmod 600 "$RUNNER_TEMP/vault_password"
 
 
