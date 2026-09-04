@@ -25,6 +25,6 @@ jobs:
           chmod 600 "$RUNNER_TEMP/vault_password"
 
 
-      - name: Run ansible check
+      - name: Deploy with Ansible
         working-directory: ansible
-        run: ansible-playbook -i inventory/hosts.yml playbooks/site.yml --check --vault-password-file "$RUNNER_TEMP/vault_password"
+        run: ansible-playbook -i inventory/hosts.yml playbooks/site.yml --vault-password-file "$RUNNER_TEMP/vault_password"
