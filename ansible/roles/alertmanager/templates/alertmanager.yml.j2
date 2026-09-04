@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 5m
+
+
+route:
+  receiver: telegram
+
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token: "{{ alertmanager_telegram_bot_token }}"
+        chat_id: {{ alertmanager_telegram_chat_id }}
+        parse_mode: HTML
+        send_resolved: true

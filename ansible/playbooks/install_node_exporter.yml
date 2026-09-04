@@ -1,0 +1,39 @@
+- name: Install Node Exporter
+  hosts: node_exporters
+  become: true
+
+
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install Node Exporter
+      ansible.builtin.apt:
+        name: prometheus-node-exporter
+        state: present
+
+
+    - name: Configure Node Exporter
+      ansible.builtin.lineinfile:
+        path: /etc/default/prometheus-node-exporter
+        regexp: '^ARGS='
+        line: 'ARGS="--web.listen-address=:9100"'
+      notify: Restart Node Exporter
+
+
+
+    - name: Enable and start Node Exporter
+      ansible.builtin.systemd:
+        name: prometheus-node-exporter
+        state: started
+        enabled: true
+
+
+  handlers:
+    - name: Restart Node Exporter
+      ansible.builtin.systemd:
+        name: prometheus-node-exporter
+        state: restarted
+

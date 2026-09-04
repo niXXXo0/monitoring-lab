@@ -1,0 +1,11 @@
+- name: Check Node Exporter
+  hosts: node_exporters
+  become: true
+
+
+  tasks:
+    - name: Check Node Exporter service
+      ansible.builtin.systemd:
+        name: node_exporter
+        state: started
+        enabled: true

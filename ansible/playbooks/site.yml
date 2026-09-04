@@ -1,0 +1,29 @@
+- name: Configure Node Exporter
+  hosts: node_exporters
+  become: true
+
+  roles:
+    - node_exporter
+
+
+- name: Configure Prometheus
+  hosts: prometheus_servers
+  become: true
+
+  roles:
+    - prometheus 
+
+
+- name: Configure Alertmanager
+  hosts: prometheus_servers
+  become: true
+
+  roles:
+    - alertmanager 
+
+
+- name: Configure Monitoring
+  hosts: grafana_servers
+  become: true
+  roles:
+    - grafana

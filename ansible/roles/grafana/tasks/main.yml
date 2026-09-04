@@ -1,0 +1,23 @@
+- name: Install Grafana
+  ansible.builtin.apt:
+    name: grafana
+    state: present
+    update_cache: true
+
+
+- name: Enable and start Grafana
+  ansible.builtin.systemd:
+    name: grafana-server
+    enabled: true
+    state: started 
+
+
+- name: Configure Prometheus datasource
+  ansible.builtin.template:
+    src: provisioning/datasources/prometheus.yml.j2
+    dest: /etc/grafana/provisioning/datasources/prometheus.yml
+    owner: root
+    group: grafana
+    mode: '0640'
+  notify: Restart Grafana
+
