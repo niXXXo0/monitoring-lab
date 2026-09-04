@@ -1,0 +1,36 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows:
+      - "Ansible CI"
+    types:
+      - completed
+    branches:
+      - main
+
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted
+
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+
+      - name: Create vault password file
+        env:
+          VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
+        run: |
+          printf '%s\n' "$VAULT_PASSWORD" > "RUNNER_TEMP/vault_password"
+          chmod 600 "$RUNNER_TEMP/vault_password"
+
+      - name: Deploy with Ansible
+        working-directory: ansible
+        run: ansible-playbook -i inventory/hosts.yml playbooks/site.yml --vault-password-file "$RUNNER_TEMP/vault_password"
+
