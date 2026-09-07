@@ -1,0 +1,13 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: telegram
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token_file: "/etc/alertmanager/secrets/telegram_bot_token"
+        chat_id: 1101883521
+        parse_mode: HTML
+        send_resolved: true
