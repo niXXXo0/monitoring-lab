@@ -1,7 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for roles/alertmanager
-alertmanager_version: "0.33.1"
+alertmanager_version: "0.34.0"
 alertmanager_user: "alertmanager"
 alertmanager_group: "alertmanager"
 
