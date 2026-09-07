@@ -72,7 +72,7 @@
     dest: "{{ alertmanager_config_file }}"
     owner: "{{ alertmanager_user }}"
     group: "{{ alertmanager_group}}"
-    mode: "0644"
+    mode: "0640"
   notify: Restart Alertmanager
 
 
